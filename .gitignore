@@ -2,6 +2,10 @@
 bin/*
 !bin/.gitkeep
 
+# deps
+include/*
+!include/.gitkeep
+
 # Prerequisites
 *.d
 
