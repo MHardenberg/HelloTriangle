@@ -5,10 +5,13 @@ project(HelloTriangle)
 set(CMAKE_BUILD_TYPE "Debug")
 
 # Common settings
+set(CMAKE_CC_COMPILER gcc)
+set(CMAKE_CC_STANDARD 17)
 set(CMAKE_CXX_COMPILER g++)
+set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_FLAGS "-Wall -Wpedantic -Wextra")
 set(CMAKE_EXE_LINKER_FLAGS "-lglfw -lGL -lX11 -lpthread -lXrandr -lXi -ldl")
-set(SOURCES src/main.cpp)
+set(SOURCES src/main.cpp include/glad/src/gl.c)
 
 # Build specific settings
 set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS} -O1 -g")
