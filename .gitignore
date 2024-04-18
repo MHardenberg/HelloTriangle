@@ -5,6 +5,7 @@ bin/*
 # deps
 include/*
 !include/.gitkeep
+!include/requirements
 
 # Prerequisites
 *.d
