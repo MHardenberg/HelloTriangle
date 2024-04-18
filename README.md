@@ -1,3 +1,3 @@
 # HelloTriangle
 
-Hello |>!
+Hello △!
