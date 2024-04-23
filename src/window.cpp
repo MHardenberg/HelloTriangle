@@ -1,4 +1,5 @@
 #include "window.hpp"
+#include <GLFW/glfw3.h>
 #include <iostream>
 #include <stdexcept>
 
@@ -10,10 +11,10 @@ Window::Window() {
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
+
     // create window
     this->glfwWindow = glfwCreateWindow(this->WIDTH, this->HEIGHT,
-            projectName, nullptr, 
-            nullptr);
+            projectName, nullptr, nullptr);
     if (this->glfwWindow  ==  nullptr) {
         std::cerr << "Failed to create window" << std::endl;
         throw std::runtime_error("Could noit create window.");
@@ -32,6 +33,7 @@ Window::Window() {
 
 
 Window::~Window() {
+    glfwDestroyWindow(this->glfwWindow);
     glfwTerminate();
 }
 
