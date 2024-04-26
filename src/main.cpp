@@ -1,5 +1,15 @@
+//#include <glad/glad.h>
+#include "../external/GLAD/include/glad/glad.h"
 #include <GLFW/glfw3.h>
-#include <memory>
+
+#include <iostream>
+
+class Engine {
+    Engine() {
+        
+    }
+};
+
 
 int main(void) {
 
@@ -16,9 +26,12 @@ int main(void) {
         glfwTerminate();
         return -1;
     }
-
     /* Make the window's context current */
     glfwMakeContextCurrent(glfwWindow);
+    gladLoadGL();
+
+    std::cout << "OpenGL version: %s\n" << glGetString(GL_VERSION)
+        << std::endl;
 
     /* Loop until the user closes the window */
     while (!glfwWindowShouldClose(glfwWindow)) {

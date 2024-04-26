@@ -3,7 +3,7 @@ project(HelloTriangle)
 
 # Building
 set(CMAKE_BUILD_TYPE "Debug")
-# set(CMAKE_BUILD_TYPE "Release")
+#set(CMAKE_BUILD_TYPE "Release")
 
 # Common settings
 set(CMAKE_CC_COMPILER gcc)
@@ -23,8 +23,7 @@ add_subdirectory(external/GLFW)
 
 
 # Includes
-include_directories(external/GLFW/include)
-include_directories(external/GLAD/include)
+include_directories(external/GLAD/include external/GLFW/include)
 
 # Executable sources
 set(SOURCES src/main.cpp external/GLAD/src/glad.c)
