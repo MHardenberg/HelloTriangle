@@ -3,9 +3,7 @@ bin/*
 !bin/.gitkeep
 
 # deps
-include/*
-!include/.gitkeep
-!include/requirements
+external/*.zip
 
 # Prerequisites
 *.d
