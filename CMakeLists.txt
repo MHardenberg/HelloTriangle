@@ -4,6 +4,7 @@ project(HelloTriangle)
 # Building
 set(CMAKE_BUILD_TYPE "Debug")
 #set(CMAKE_BUILD_TYPE "Release")
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 # Common settings
 set(CMAKE_CC_COMPILER gcc)
@@ -22,8 +23,6 @@ find_package(OpenGL REQUIRED)
 add_subdirectory(external/GLFW)  
 
 
-# Includes
-include_directories(external/GLAD/include external/GLFW/include)
 
 # Executable sources
 set(SOURCES src/main.cpp external/GLAD/src/glad.c)
@@ -31,6 +30,13 @@ set(SOURCES src/main.cpp external/GLAD/src/glad.c)
 
 # Executable
 add_executable(HelloTriangle ${SOURCES})
+
+# Includes
+target_include_directories(HelloTriangle PRIVATE 
+    ${CMAKE_SOURCE_DIR}/external/GLAD/include/ 
+    ${CMAKE_SOURCE_DIR}/external/GLFW/include/ 
+    ${CMAKE_SOURCE_DIR}/src/MACROS/
+    )
 
 # Link GLFW and OpenGL
 target_link_libraries(HelloTriangle PRIVATE glfw OpenGL::GL)

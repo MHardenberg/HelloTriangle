@@ -1,6 +1,9 @@
-#include <glad/glad.h>
+//#include <glad/glad.h>
+#include "../../external/GLAD/include/glad/glad.h"
+#include <GL/gl.h>
 #include <GLFW/glfw3.h>
-#include "../MACROS.hpp"
+//#include <MACROS.hpp>
+#include "../MACROS/MACROS.hpp"
 
 
 class Engine {
@@ -13,7 +16,7 @@ class Engine {
     
     public:
         Engine() {
-            if (!glfwInit()) {LOG("glfw initalisation failed."); return;}
+            if (!glfwInit()) {LOG_M("glfw initalisation failed."); return;}
             this->glfwInitialised = true;
 
             // create window
@@ -23,7 +26,10 @@ class Engine {
             // manage context ~ whatever that means.....
             glfwMakeContextCurrent(glfwWindow);
             gladLoadGL();
-            LOG("OpenGL version: %s\n" << glGetString(GL_VERSION));
+            LOG_M("OpenGL version: %s\n" << glGetString(GL_VERSION));
+
+            // set viewport for scaling
+            glViewport(0, 0, this->WIDTH, this->HEIGHT);
         }
 
         ~Engine() {
