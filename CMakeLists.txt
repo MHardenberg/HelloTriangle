@@ -25,7 +25,9 @@ add_subdirectory(external/GLFW)
 
 
 # Executable sources
-set(SOURCES src/main.cpp external/GLAD/src/glad.c)
+set(SOURCES 
+    src/main.cpp src/engine/engine.cpp
+    external/GLAD/src/glad.c)
 
 
 # Executable
