@@ -18,12 +18,17 @@ set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS} -O3 -s")
 # Find OpenGL package
 find_package(OpenGL REQUIRED)
 
-# GLFW settings
+# dependencies
 add_subdirectory(external/GLFW)  
+
+
+# Includes
 include_directories(external/GLFW/include)
+include_directories(external/GLAD/include)
 
 # Executable sources
-set(SOURCES src/main.cpp)
+set(SOURCES src/main.cpp external/GLAD/src/glad.c)
+
 
 # Executable
 add_executable(HelloTriangle ${SOURCES})

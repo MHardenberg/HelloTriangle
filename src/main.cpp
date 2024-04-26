@@ -8,27 +8,25 @@ int main(void) {
         return -1;
     }
 
-    auto glfwWindow* = glfwCreateWindow(640, 480, "Hello World",
-            glfwGetPrimaryMonitor(),
-            NULL) 
-        );
+    GLFWwindow* glfwWindow = glfwCreateWindow(640, 480, "Hello World",
+            glfwGetPrimaryMonitor(), NULL);
 
 
-    if (!*glfwWindow) {
+    if (!glfwWindow) {
         glfwTerminate();
         return -1;
     }
 
     /* Make the window's context current */
-    glfwMakeContextCurrent(*glfwWindow);
+    glfwMakeContextCurrent(glfwWindow);
 
     /* Loop until the user closes the window */
-    while (!glfwWindowShouldClose(*glfwWindow)) {
+    while (!glfwWindowShouldClose(glfwWindow)) {
         /* Render here */
         glClear(GL_COLOR_BUFFER_BIT);
 
         /* Swap front and back buffers */
-        glfwSwapBuffers(*glfwWindow);
+        glfwSwapBuffers(glfwWindow);
 
         /* Poll for and process events */
         glfwPollEvents();
