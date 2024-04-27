@@ -14,10 +14,17 @@ class Engine {
     private:
         GLFWwindow* glfwWindow;
         bool glfwInitialised = false;
+        unsigned int VBO;  // vertex buffer object - here we send vertices to 
+                           // gpu mem
     
     public:
         Engine();
         ~Engine();
 
-        void render();
+        void run();
+    private:
+        void processInput();
+        void render() {
+
+        }
 };

@@ -23,11 +23,12 @@ find_package(OpenGL REQUIRED)
 add_subdirectory(external/GLFW)  
 
 
-
 # Executable sources
 set(SOURCES 
-    src/main.cpp src/engine/engine.cpp
-    external/GLAD/src/glad.c)
+    src/main.cpp 
+    src/engine/engine.cpp
+    external/GLAD/src/glad.c
+    )
 
 
 # Executable

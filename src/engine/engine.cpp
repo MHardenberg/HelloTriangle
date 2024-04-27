@@ -1,4 +1,6 @@
 #include "engine.hpp"
+#include <GLFW/glfw3.h>
+#include "entity.hpp"
 
 
 Engine::Engine() {
@@ -16,6 +18,11 @@ Engine::Engine() {
 
     // set viewport for scaling
     glViewport(0, 0, this->WIDTH, this->HEIGHT);
+
+
+    // init VBO
+    glGenBuffers(1, &this->VBO);
+    glBindBuffer(GL_ARRAY_BUFFER, VBO); // binds it to array buff
 }
 
 
@@ -24,16 +31,46 @@ Engine::~Engine() {
     }
 
 
-void Engine::render() {
+void Engine::run() {
     if (!this->glfwInitialised) {return;}
-    while (!glfwWindowShouldClose(glfwWindow)) {
-        /* Render here */
-        glClear(GL_COLOR_BUFFER_BIT);
 
-        /* Swap front and back buffers */
+    // populate enteties
+    Entity triangle;
+
+    while (!glfwWindowShouldClose(glfwWindow)) {
+    // process input and act
+        this->processInput();
+
+
+
+
+    // Render here
+        //glClear(GL_COLOR_BUFFER_BIT);
+        //copy data to buff
+        glBufferData(GL_ARRAY_BUFFER, sizeof(triangle.vertices), 
+                triangle.vertices, GL_STATIC_DRAW);
+
+        /*
+            GL_STREAM_DRAW: the data is set only once and used by the GPU at most a few times.
+            GL_STATIC_DRAW: the data is set only once and used many times.
+            GL_DYNAMIC_DRAW: the data is changed a lot and used many times.
+         */
+
+
+    // Poll for and process events
+        glfwPollEvents();
+
+    // Swap front and back buffers
         glfwSwapBuffers(glfwWindow);
 
-        /* Poll for and process events */
-        glfwPollEvents();
+    }
+}
+
+void Engine::processInput() {
+    if (glfwGetKey(this->glfwWindow, GLFW_KEY_ESCAPE) == GLFW_PRESS) {
+
+        glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
+        glClear(GL_COLOR_BUFFER_BIT);
+        //glfwSetWindowShouldClose(this->glfwWindow, true);
     }
 }
