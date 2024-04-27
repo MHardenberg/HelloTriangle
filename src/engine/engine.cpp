@@ -1,6 +1,5 @@
 #include "engine.hpp"
-#include <GLFW/glfw3.h>
-#include "entity.hpp"
+#include "shaders/vertexShader.h"
 
 
 Engine::Engine() {
@@ -14,7 +13,7 @@ Engine::Engine() {
     // manage context ~ whatever that means.....
     glfwMakeContextCurrent(glfwWindow);
     gladLoadGL();
-    LOG_M("OpenGL version: %s\n" << glGetString(GL_VERSION));
+    LOG_M("OpenGL version: " << glGetString(GL_VERSION));
 
     // set viewport for scaling
     glViewport(0, 0, this->WIDTH, this->HEIGHT);
@@ -23,6 +22,20 @@ Engine::Engine() {
     // init VBO
     glGenBuffers(1, &this->VBO);
     glBindBuffer(GL_ARRAY_BUFFER, VBO); // binds it to array buff
+
+    // init and compile shader
+    vertexShader = glCreateShader(GL_VERTEX_SHADER);
+    glShaderSource(vertexShader, 1, &vertexShaderSource, NULL);
+    glCompileShader(vertexShader);
+
+    // check if compiled succesfully
+    int  success;
+    char infoLog[512];
+    glGetShaderiv(vertexShader, GL_COMPILE_STATUS, &success);
+    if(!success) {
+        glGetShaderInfoLog(vertexShader, 512, NULL, infoLog);
+        LOG_M("ERROR::SHADER::VERTEX::COMPILATION_FAILED\n" << infoLog);
+    }
 }
 
 
@@ -51,7 +64,8 @@ void Engine::run() {
                 triangle.vertices, GL_STATIC_DRAW);
 
         /*
-            GL_STREAM_DRAW: the data is set only once and used by the GPU at most a few times.
+            GL_STREAM_DRAW: the data is set only once and used by the GPU 
+                at most a few times.
             GL_STATIC_DRAW: the data is set only once and used many times.
             GL_DYNAMIC_DRAW: the data is changed a lot and used many times.
          */
