@@ -1,5 +1,4 @@
 #include "engine.hpp"
-#include "shaders/vertexShader.h"
 
 
 Engine::Engine() {
@@ -22,20 +21,10 @@ Engine::Engine() {
     // init VBO
     glGenBuffers(1, &this->VBO);
     glBindBuffer(GL_ARRAY_BUFFER, VBO); // binds it to array buff
+    
 
-    // init and compile shader
-    vertexShader = glCreateShader(GL_VERTEX_SHADER);
-    glShaderSource(vertexShader, 1, &vertexShaderSource, NULL);
-    glCompileShader(vertexShader);
-
-    // check if compiled succesfully
-    int  success;
-    char infoLog[512];
-    glGetShaderiv(vertexShader, GL_COMPILE_STATUS, &success);
-    if(!success) {
-        glGetShaderInfoLog(vertexShader, 512, NULL, infoLog);
-        LOG_M("ERROR::SHADER::VERTEX::COMPILATION_FAILED\n" << infoLog);
-    }
+    // init shaders
+    shader.compile();
 }
 
 
