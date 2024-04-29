@@ -9,7 +9,7 @@
 
 namespace shader {
     struct GLSource {
-// This is the source code for various shaders. It is in OpenGL SHader lang.
+// This is the source code for various shaders. It is in OpenGL Shader lang.
 // These have to be compiled and liked into a shader program.
         const char *vertexShader = 
             "#version 460 core\n"
@@ -33,27 +33,5 @@ namespace shader {
             "    FragColor = vec4(1.0f, 0.5f, 0.2f, 1.0f);\n"
             "}\0";
     };
-
-
-    struct Shader {
-         unsigned int vertexShader;
-         GLSource source;
-
-        void compile() {
-            // init and compile shader
-            vertexShader = glCreateShader(GL_VERTEX_SHADER);
-            glShaderSource(vertexShader, 1, &source.vertexShader, NULL);
-            glCompileShader(vertexShader);
-
-            // check if compiled succesfully
-            int  success;
-            char infoLog[512];
-            glGetShaderiv(vertexShader, GL_COMPILE_STATUS, &success);
-            if(!success) {
-                glGetShaderInfoLog(vertexShader, 512, NULL, infoLog);
-                LOG_M("ERROR::SHADER::VERTEX::COMPILATION_FAILED\n"
-                        << infoLog);
-            }
-        }
-    };
-};
+    int compileShader ();
+}

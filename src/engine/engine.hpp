@@ -5,7 +5,7 @@
 #include <GLFW/glfw3.h>
 //#include <MACROS.hpp>
 #include "../MACROS/MACROS.hpp"
-#include "shader/shader.h"
+#include "shader/shader.hpp"
 #include "entity.hpp"
 
 
@@ -18,8 +18,6 @@ class Engine {
         bool glfwInitialised = false;
         unsigned int VBO;  // vertex buffer object - here we send vertices to 
                            // gpu mem
-        
-        shader::Shader shader;
         
     public:
         Engine();

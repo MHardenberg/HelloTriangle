@@ -1,4 +1,5 @@
 #include "engine.hpp"
+#include "shader/shader.hpp"
 
 
 Engine::Engine() {
@@ -24,7 +25,7 @@ Engine::Engine() {
     
 
     // init shaders
-    shader.compile();
+    if(shader::compileShader()){throw;};
 }
 
 
