@@ -5,19 +5,20 @@
 #include <GLFW/glfw3.h>
 //#include <MACROS.hpp>
 #include "../MACROS/MACROS.hpp"
-#include "shader/shader.hpp"
 #include "entity.hpp"
 
 
 class Engine {
     public:
-        const unsigned int WIDTH = 600, HEIGHT = 400;
+        const unsigned int WIDTH = 1920, HEIGHT = 1080;
 
     private:
         GLFWwindow* glfwWindow;
         bool glfwInitialised = false;
         unsigned int VBO;  // vertex buffer object - here we send vertices to 
                            // gpu mem
+        unsigned int VAO; // vertex array object
+        unsigned int shaderProgram;
         
     public:
         Engine();

@@ -25,8 +25,13 @@ Engine::Engine() {
     
 
     // init shaders
-    if(shader::compileShader()){throw;};
-}
+    shader::Shader shader;
+    this->shaderProgram = shader.compile();
+
+
+    glGenVertexArrays(1, &VAO);
+    glBindVertexArray(VAO);
+    }
 
 
 Engine::~Engine() {
@@ -39,6 +44,20 @@ void Engine::run() {
 
     // populate enteties
     Entity triangle;
+    // 2. copy our vertices array in a buffer for OpenGL to use
+    glBindBuffer(GL_ARRAY_BUFFER, VBO);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(triangle.vertices), 
+            triangle.vertices, GL_STATIC_DRAW);
+        /*
+            GL_STREAM_DRAW: the data is set only once and used by the GPU 
+                at most a few times.
+            GL_STATIC_DRAW: the data is set only once and used many times.
+            GL_DYNAMIC_DRAW: the data is changed a lot and used many times.
+         */
+    // 3. then set our vertex attributes pointers
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
+    glEnableVertexAttribArray(0);  
+
 
     while (!glfwWindowShouldClose(glfwWindow)) {
     // process input and act
@@ -49,17 +68,9 @@ void Engine::run() {
 
     // Render here
         //glClear(GL_COLOR_BUFFER_BIT);
-        //copy data to buff
-        glBufferData(GL_ARRAY_BUFFER, sizeof(triangle.vertices), 
-                triangle.vertices, GL_STATIC_DRAW);
-
-        /*
-            GL_STREAM_DRAW: the data is set only once and used by the GPU 
-                at most a few times.
-            GL_STATIC_DRAW: the data is set only once and used many times.
-            GL_DYNAMIC_DRAW: the data is changed a lot and used many times.
-         */
-
+        glUseProgram(this->shaderProgram);
+        glBindVertexArray(this->VAO);
+        glDrawArrays(GL_TRIANGLES, 0, 3);
 
     // Poll for and process events
         glfwPollEvents();

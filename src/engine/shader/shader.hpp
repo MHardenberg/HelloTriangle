@@ -33,5 +33,20 @@ namespace shader {
             "    FragColor = vec4(1.0f, 0.5f, 0.2f, 1.0f);\n"
             "}\0";
     };
-    int compileShader ();
+
+    class Shader {
+        private:
+            GLSource source;
+            unsigned int vertexShader, fragmentShader;
+
+        public:
+            Shader() = default;
+            ~Shader() {
+                glDeleteShader(this->vertexShader);
+                glDeleteShader(this->fragmentShader);
+            }
+
+
+            unsigned int compile();
+    };
 }
