@@ -16,6 +16,24 @@ void Entity::gravity (float milliseconds) {
     this->velocity[1] -= g*milliseconds / 1e3;
 }
 
+void Entity::friction(float milliseconds) {
+    static const float mu = CONSTANT_FRICTION;
+    static const float g = CONSTANT_G;
+
+    if (!this->onSurface()) {return;}
+    // stays unmoving
+    if (!this->velocity[0]) {return;}
+
+    if (velocity[0] > 0) {
+        this-> velocity[0] = 
+            std::max(0., velocity[0] - g * mu * milliseconds / 1e3);
+    }
+    if (velocity[0] < 0) {
+        this-> velocity[0] = 
+            std::min(0., velocity[0] + g * mu * milliseconds / 1e3);
+    }
+}
+
 
 void Entity::hTranslate(float x) {
     float hPos = this->pos[0] + x;
