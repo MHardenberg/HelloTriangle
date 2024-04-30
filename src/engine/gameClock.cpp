@@ -1,6 +1,5 @@
 #include "gameClock.hpp"
 
-
 void GameClock::idle() {
     auto start = this->now;
     this->mark();

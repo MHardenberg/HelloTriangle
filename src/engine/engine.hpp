@@ -25,6 +25,7 @@ class Engine {
 
         Entity player;
         float moveIncrement = 0.025f;
+        float velIncrement = 0.025f;
         
         GameClock clock;
         

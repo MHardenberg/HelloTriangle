@@ -46,4 +46,3 @@ target_include_directories(HelloTriangle PRIVATE
 
 # Link GLFW and OpenGL
 target_link_libraries(HelloTriangle PRIVATE glfw OpenGL::GL)
-

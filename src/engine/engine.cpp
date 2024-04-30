@@ -115,19 +115,22 @@ void Engine::run() {
 
 
 void Engine::processInput() {
-    if (glfwGetKey(this->glfwWindow, GLFW_KEY_W) == GLFW_PRESS) {
-        this->player.vTranslate(this->moveIncrement);
-    }
-    if (glfwGetKey(this->glfwWindow, GLFW_KEY_S) == GLFW_PRESS) {
-        this->player.vTranslate(-this->moveIncrement);
-    }
+    // motion
     if (glfwGetKey(this->glfwWindow, GLFW_KEY_D) == GLFW_PRESS) {
-        this->player.hTranslate(this->moveIncrement);
+        this->player.velocity[0] += this->velIncrement;
     }
     if (glfwGetKey(this->glfwWindow, GLFW_KEY_A) == GLFW_PRESS) {
-        this->player.hTranslate(-this->moveIncrement);
+        this->player.velocity[0] -= this->velIncrement;
     }
+
     if (glfwGetKey(this->glfwWindow, GLFW_KEY_ESCAPE) == GLFW_PRESS) {
         glfwSetWindowShouldClose(this->glfwWindow, true);
     }
+
+    //jumping 
+    if (glfwGetKey(this->glfwWindow, GLFW_KEY_SPACE) == GLFW_PRESS) {
+        this->player.velocity[1] += this->velIncrement * 10;
+    }
+
+    this->player.update(this->clock.dtMilli);
 }
