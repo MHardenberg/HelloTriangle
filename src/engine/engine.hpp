@@ -49,7 +49,7 @@ class Engine {
         enum class renderMode {staticRender, streamRender, dynamicRender};
 
         Entity player;
-        float moveIncrement = 0.01f;
+        float moveIncrement = 0.025f;
         
         Clock clock;
         
