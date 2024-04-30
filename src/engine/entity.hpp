@@ -13,9 +13,9 @@ class Entity {
         std::array<float, 2> pos {0.0f, 0.0f};
         const float* vertices_prt;
         std::array<float, 9> vertices {
-            -this->width/2, 0.0f, 0.0f,
-             this->width/2, 0.0f, 0.0f,
-             0.0f,  this->height, 0.0f
+             0.0f, 0.0f, 0.0f,
+             0.0f, 0.0f, 0.0f,
+             0.0f, 0.0f, 0.0f
         }; 
 
     private:
@@ -25,12 +25,13 @@ class Entity {
 
         const float hLimUpper = 1 - this->width/2;
         const float hLimLower = -1 + this->width/2;
-        const float vLimUpper = 1 - this->height/2;
-        const float vLimLower = -1 + this->height/2;
+        const float vLimUpper = 2;
+        const float vLimLower = -1 + this->height/2 + 0.1;
 
     public: 
         Entity(){
             vertices_prt = vertices.data();
+            this->update(0);
         }
 
         void update(float milliseconds); 
