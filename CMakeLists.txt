@@ -27,6 +27,8 @@ add_subdirectory(external/GLFW)
 set(SOURCES 
     src/main.cpp 
     src/engine/engine.cpp
+    src/engine/gameClock.cpp
+    src/engine/entity.cpp
     src/engine/shader/shader.cpp
     external/GLAD/src/glad.c
     )

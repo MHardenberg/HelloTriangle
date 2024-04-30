@@ -113,23 +113,21 @@ void Engine::run() {
     }
 }
 
+
 void Engine::processInput() {
     if (glfwGetKey(this->glfwWindow, GLFW_KEY_W) == GLFW_PRESS) {
-        this->player.translate(0., this->moveIncrement);
+        this->player.vTranslate(this->moveIncrement);
     }
     if (glfwGetKey(this->glfwWindow, GLFW_KEY_S) == GLFW_PRESS) {
-        this->player.translate(0., -this->moveIncrement);
+        this->player.vTranslate(-this->moveIncrement);
     }
     if (glfwGetKey(this->glfwWindow, GLFW_KEY_D) == GLFW_PRESS) {
-        this->player.translate(this->moveIncrement, 0.);
+        this->player.hTranslate(this->moveIncrement);
     }
     if (glfwGetKey(this->glfwWindow, GLFW_KEY_A) == GLFW_PRESS) {
-        this->player.translate(-this->moveIncrement, 0.);
+        this->player.hTranslate(-this->moveIncrement);
     }
     if (glfwGetKey(this->glfwWindow, GLFW_KEY_ESCAPE) == GLFW_PRESS) {
-
-        glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
-        glClear(GL_COLOR_BUFFER_BIT);
-        //glfwSetWindowShouldClose(this->glfwWindow, true);
+        glfwSetWindowShouldClose(this->glfwWindow, true);
     }
 }

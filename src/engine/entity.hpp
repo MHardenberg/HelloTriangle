@@ -22,16 +22,6 @@ class Entity {
             vertices_prt = vertices.data();
         }
 
-        void translate(float x, float y) {
-
-                for (size_t i: x_pos) {
-                        vertices[i] += x;
-                }
-                
-
-                for (size_t j: y_pos) {
-                        vertices[j] += y;
-                    }
-        }
-        
+        void hTranslate(float x); 
+        void vTranslate(float y); 
 };

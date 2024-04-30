@@ -6,33 +6,8 @@
 //#include <MACROS.hpp>
 #include "../MACROS/MACROS.hpp"
 #include "entity.hpp"
-#include <chrono>
-#include <thread>
+#include "gameClock.hpp"
 
-
-class Clock {
-    public:
-        std::chrono::milliseconds deltaTime = 
-            std::chrono::milliseconds(this->milliseconds);
-    private:
-        std::chrono::time_point<std::chrono::high_resolution_clock> now;
-        constexpr static long milliseconds = (long)(1000./ 60);
-
-    public:
-        void mark() {
-            now = std::chrono::high_resolution_clock::now();
-        }
-
-        void idle() {
-            auto start = this->now;
-            this->mark();
-            auto time = 
-                std::chrono::duration_cast<std::chrono::milliseconds> 
-                (this-> now - start);
-
-            std::this_thread::sleep_for(deltaTime - time);
-        }
-};
 
 class Engine {
     public:
@@ -51,7 +26,7 @@ class Engine {
         Entity player;
         float moveIncrement = 0.025f;
         
-        Clock clock;
+        GameClock clock;
         
     public:
         Engine();
