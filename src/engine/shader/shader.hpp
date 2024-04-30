@@ -35,6 +35,8 @@ namespace shader {
     };
 
     class Shader {
+        public:
+            bool success = false;
         private:
             GLSource source;
             unsigned int vertexShader, fragmentShader;

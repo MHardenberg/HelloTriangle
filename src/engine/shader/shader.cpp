@@ -22,6 +22,7 @@ unsigned int shader::Shader::compile(){
             glGetShaderInfoLog(s, 512, NULL, infoLog);
             LOG_M("ERROR::SHADER::VERTEX::COMPILATION_FAILED\n"
             << infoLog);
+            goto end;
         }
     }
 
@@ -38,8 +39,12 @@ unsigned int shader::Shader::compile(){
         glGetShaderInfoLog(shaderProgram, 512, NULL, infoLog);
         LOG_M("ERROR::SHADER::VERTEX::COMPILATION_FAILED\n"
         << infoLog);
+        goto end;
     }
 
     glUseProgram(shaderProgram);
-    return shaderProgram;
+
+    end:
+        this->success = success;
+        return shaderProgram;
 }

@@ -27,6 +27,7 @@ Engine::Engine() {
     // init shaders
     shader::Shader shader;
     this->shaderProgram = shader.compile();
+    this->shaderCompiled = shader.success;
 
 
     glGenVertexArrays(1, &VAO);
@@ -39,39 +40,70 @@ Engine::~Engine() {
     }
 
 
-void Engine::run() {
-    if (!this->glfwInitialised) {return;}
+void Engine::processVertices(Entity entity, renderMode mode) {
+    unsigned int drawMode;
 
-    // populate enteties
-    Entity triangle;
-    // 2. copy our vertices array in a buffer for OpenGL to use
-    glBindBuffer(GL_ARRAY_BUFFER, VBO);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(triangle.vertices), 
-            triangle.vertices, GL_STATIC_DRAW);
+    switch (mode) {
         /*
             GL_STREAM_DRAW: the data is set only once and used by the GPU 
                 at most a few times.
             GL_STATIC_DRAW: the data is set only once and used many times.
             GL_DYNAMIC_DRAW: the data is changed a lot and used many times.
          */
-    // 3. then set our vertex attributes pointers
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
+
+        case renderMode::staticRender: {
+            drawMode = GL_STATIC_DRAW;
+            break;
+                                       }
+        case renderMode::streamRender: {
+            drawMode = GL_STREAM_DRAW;
+            break;
+                                       }
+        case renderMode::dynamicRender: {
+            drawMode = GL_DYNAMIC_DRAW;
+            break;
+                                       }
+        default: {
+            drawMode = GL_STATIC_DRAW;
+            break;
+                 }
+
+                                        
+    }
+
+    // copy vertices array in a buffer for OpenGL to use
+    glBindBuffer(GL_ARRAY_BUFFER, VBO);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(entity.vertices), 
+            entity.vertices_prt, drawMode);
+
+    // then set our vertex attributes pointers
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE,
+            3 * sizeof(float), (void*)0);
     glEnableVertexAttribArray(0);  
 
+    // render triangles
+    glUseProgram(this->shaderProgram);
+    glBindVertexArray(this->VAO);
+    glDrawArrays(GL_TRIANGLES, 0, 3);
+
+}
+
+void Engine::run() {
+    if (!this->glfwInitialised or !this->shaderCompiled) {return;}
+
+    // populate entities
 
     while (!glfwWindowShouldClose(glfwWindow)) {
     // process input and act
-        this->processInput();
+        this->clock.mark();
+        glClear(GL_COLOR_BUFFER_BIT);
+        processVertices(this->player, renderMode::dynamicRender);
+       this->processInput();
 
-
-
+       this->clock.idle();
 
     // Render here
-        //glClear(GL_COLOR_BUFFER_BIT);
-        glUseProgram(this->shaderProgram);
-        glBindVertexArray(this->VAO);
-        glDrawArrays(GL_TRIANGLES, 0, 3);
-
+        
     // Poll for and process events
         glfwPollEvents();
 
@@ -82,6 +114,18 @@ void Engine::run() {
 }
 
 void Engine::processInput() {
+    if (glfwGetKey(this->glfwWindow, GLFW_KEY_W) == GLFW_PRESS) {
+        this->player.translate(0., this->moveIncrement);
+    }
+    if (glfwGetKey(this->glfwWindow, GLFW_KEY_S) == GLFW_PRESS) {
+        this->player.translate(0., -this->moveIncrement);
+    }
+    if (glfwGetKey(this->glfwWindow, GLFW_KEY_D) == GLFW_PRESS) {
+        this->player.translate(this->moveIncrement, 0.);
+    }
+    if (glfwGetKey(this->glfwWindow, GLFW_KEY_A) == GLFW_PRESS) {
+        this->player.translate(-this->moveIncrement, 0.);
+    }
     if (glfwGetKey(this->glfwWindow, GLFW_KEY_ESCAPE) == GLFW_PRESS) {
 
         glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
