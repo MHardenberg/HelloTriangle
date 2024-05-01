@@ -40,8 +40,8 @@ void Entity::hTranslate(float x) {
     if (hPos > this->hLimLower and hPos < this->hLimUpper) 
         {this->pos[0] = hPos; return;}
     
-    // else negate velocity
-    this->velocity[0] = 0;
+    // else bounce velocity
+    this->velocity[0] = -this->velocity[0];
 
     if (this->pos[0] < 0) {this->pos[0] = hLimLower;}
     if (this->pos[0] > 0) {this->pos[0] = hLimUpper;}
@@ -53,7 +53,7 @@ void Entity::vTranslate(float y) {
         {this->pos[1] = vPos; return;}
 
     // else negate velocity
-    this->velocity[1] = 0;
+    this->velocity[1] = -0.5*this->velocity[1];
 
     if (this->pos[1] < 0) {this->pos[1] = vLimLower;}
     if (this->pos[1] > 0) {this->pos[1] = vLimUpper;}
